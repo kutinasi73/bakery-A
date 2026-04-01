@@ -1,60 +1,137 @@
 
 :root{
     /* フォントファミリーの定義 */
-    --ff-serif: "Zen Maru Gothic", sans-serif; /* メインの明朝体 */
-    --ff-num: "Montserrat", sans-serif; /* 補足用のゴシック体 */
+    --ff-serif: 'Noto Serif JP', serif; /* メインの明朝体 */
+    --ff-num: "DM Serif Display", serif;; /* 補足用のゴシック体 */
     
     /* メインフォントサイズを定義 */ /* clamp(最小, 可変, 最大) */
-    --fz-48: clamp(36px, 6vw, 54px);
+    --fz-64: clamp(40px, 8vw, 64px);  /* 「一斤」 */
+    --fz-48: clamp(32px, 6vw, 48px);  /*h2*/
     --fz-40: clamp(32px, 5vw, 40px);
-    --fz-36: clamp(24px, 4.5vw, 36px);
-    --fz-32: clamp(20px, 4vw, 32px);
-    --fz-24: clamp(20px, 3vw, 24px);
-    --fz-20: clamp(16px, 2.5vw, 20px);
-    --fz-16: clamp(14px, 1.7vw, 16px);
+    --fz-36: clamp(20px, 4.5vw, 36px); /* サークル */
+    --fz-32: clamp(24px, 4vw, 32px);  /* タイトル */
+    --fz-24: clamp(20px, 3vw, 24px); /* 見出し */
+    --fz-20: clamp(16px, 2.5vw, 20px);  /* 本文*/
+    --fz-16: clamp(14px, 2vw, 16px); /* cta※ */
     
     /* 行間 */
-    --line-height-base: 1.8; /* 10% */
+    --line-height-base: 1.75; /* 10% */
     --line-height-tight: 1.2; /* 5% */
     /* 字間 */
-    --letter-spacing-tight: 0.05em; 
-    --letter-spacing-base: 0.1em; /* セクションタイトルを少し優雅に */
+    --letter-spacing-base: 0.04em; /* ほんの少しだけ広げる */
+    --letter-spacing-title: 0.1em; /* セクションタイトルを少し優雅に */
 
     /* 色 */
-    --color-main: #F2E2C4;
-    --color-accent: #A62F03;
-    --color-txt:#D98218;
+    --color-main: #FAF2E8;
+    --color-accent: #D9C0A3;
+    --color-txt:#593D2D;
     
+    /* グラデーションの色定義 */
+    --cta-gradient: linear-gradient(135deg, #BFA380 30%, #A17845 100%);
 }
 .num{
     font-family: var(--ff-num);
     font-weight: 400;
-    font-style: normal; 
+    font-style: italic; /* 斜体にする場合。普通が良ければ normal に変更 */
     letter-spacing: 0.02em;
 }
 
-body{
-    background-color: var(--color-main);
+/* 全体の基本設定 */
+body {
     font-family: var(--ff-serif);
     font-optical-sizing: auto;
-    font-weight: 400;
+    font-weight: 400; /* 基本の太さ */
     font-style: normal;
     -webkit-font-smoothing: antialiased;
+    background-color: var(--color-accent);
     color: var(--color-txt);
-    font-size: var(--fz-20);
+}
+/* --- CTA --- */
+.fv-link, .body-link {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--cta-gradient); 
+    text-decoration: none; 
+    margin: 0 auto;
+}
+.fv-link {
+    max-width: 480px;
+    height: 100px;
+}
+
+.body-link {
+    position: static; 
+    width: 100%;      
+    height: 145px;
+    margin-top: auto; 
+    display: flex;
+}
+
+.link-txt{
+    display: flex;
+    align-items: baseline;
+    color: var(--color-main);
+    font-size: 24px;
+    font-weight: bold;
     line-height: var(--line-height-base);
     letter-spacing: var(--letter-spacing-base);
 }
+.link-txt span{
+    font-size: 36px;
+}
+.link-subtxt{
+    color: var(--color-txt);
+    font-size: var(--fz-16);
+    font-weight: 400;
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-title);    
+}
+.fv-link, .body-link, .fixed-bar-btn {
+    transition: opacity 0.3s ease;
+}
+
+.fv-link:hover, .body-link:hover, .fixed-bar-btn:hover {
+    opacity: 0.8;
+    background-color: var(--color-main);
+    border: 5px inset var(--color-txt);
+}
+
+.fv-link:hover .link-txt,
+.body-link:hover .link-txt {
+    color: var(--color-txt);
+}
+@media screen and (max-width: 768px) {
+    .body-link{
+        height: 100px;
+    }
+}
+/* セクションタイトル */
 .section-title{
-    margin: 0 auto clamp(50px,8vw,100px);
-    font-size: var(--fz-32);
-    text-align: center;
     display: flex;
     align-items: baseline;
     justify-content: center;
+    font-size: var(--fz-32);
 }
-.section-title span{
-    font-size: var(--fz-40);
+.concept-title{
+    display: flex;
+    align-items: baseline;
+}
+.concept-title h3{
+    font-size: var(--fz-32);
+}
+.concept-title span{
+    font-size: clamp(32px, 5vw, 40px);
+}
+@media screen and (max-width: 768px) {
+    .section-title{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 }
 /*--- ファーストビュー ---*/
 .fv{
@@ -67,361 +144,426 @@ body{
     background-repeat: no-repeat;
     
     /* 上下の余白をしっかり取る（これがセクションの高さになる） */
-    padding: 140px 0 0 0; 
+    padding: clamp(50px, 10vw, 100px) 0; 
     
     /* 中の文字を読みやすくするための微調整（暗くしたりなど） */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-}
-.fv-img{
-    display: none;
+    justify-content: center;
 }
 .fv-inner{
     max-width: 960px;
-    width: 95%;
+    width: 90%;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
 }
-.fv-circle{
-    width: clamp(75px,18vw,200px);
-    height: clamp(75px,18vw,200px);
-    border-radius: 50%;
-    background-color: var(--color-accent);
-    color: var(--color-main);
-    font-size:clamp(20px,4.2vw,40px);
-    font-weight: bold;
-    line-height: var(--line-height-tight);
-    letter-spacing: var(--letter-spacing-tight);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-right: auto;
-}
-.fv-body{
-    background-color: rgba(242, 226, 196, 0.8);
-    color: var(--color-txt);
-    width: 480px;
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    border-radius: 10px;
-}
-.fv-body h1{
+/* キャッチコピー */
+.fv-title {
+    position: relative; 
+    max-width: 960px;
+    width: 100%;
     font-size: var(--fz-48);
+    color: var(--color-main);
     font-weight: bold;
+    z-index: 10;
 }
-.fv-body p{
-    font-size: var(--fz-32);
-    font-weight: bold;
-    line-height: var(--line-height-tight);
-    text-align: center;
-}
-.fv-body-main{
+.fv-title-main{
     display: flex;
-    flex-wrap: wrap;
     align-items: baseline;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.fv-highlight{
+    font-size: var(--fz-64);
+    color: var(--color-accent);
+    font-weight: 900;
+}
+/* サークル */
+.fv-circle{
+    position:relative;
+    width: clamp(110px, 18vw, 200px); 
+    height: clamp(110px, 18vw, 200px);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: 50%;
+    background: linear-gradient(180deg, #FAF2E8 30%, #EBD5BC 100%);
+}
+.fv-circle p{
     font-size: var(--fz-36);
     font-weight: bold;
-    letter-spacing: var(--letter-spacing-tight);
-    line-height: var(--line-height-tight);
+    letter-spacing: var(--line-height-base);
+    background: linear-gradient(180deg, #D9C0A3 0%, #593D2D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
-.fv-body-main span{
-    font-size: var(--fz-40);
-}
-
-@media screen and (max-width: 768px) {
-    .fv{
-        min-height: 725px;
-        /* 背景画像として設定 */
-        background-color: var(--color-main);
-        background-image: none;
-        padding:0; 
-    }
-    .fv-inner{
-        margin: 50px auto;
-    }
-    .fv-body{
-        width: 100%;
-        height: auto;
-        flex: 1;
-        gap: 10px;
-    }
-    .fv-img{
-        display: block;
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-    }
-}
-/*--- このパンについて ---*/
-.about{
-    /* 背景画像として設定 */
-    background-color: var(--color-main);
-    
-    /* 上下の余白をしっかり取る（これがセクションの高さになる） */
-    padding: clamp(50px, 8vw, 100px) 0;
-    
-    /* 中の文字を読みやすくするための微調整（暗くしたりなど） */
+.fv-circle-main{
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: baseline;
+    gap: 2px;
+    background: linear-gradient(180deg, #D9C0A3 0%, #593D2D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
-.about-inner{
-    max-width: 960px;
-    width: 95%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.fv-circle-main span{
+    font-size: var(--fz-64);
+    line-height: 1em;
 }
-.about-body{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: clamp(40px, 5vw,50px);
-}
-.about-box{
+.fv-body{
+    position: relative;
+    max-width: 500px;
     width: 100%;
+    margin-left:auto;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    gap: 45px;
 }
-.about-box img{
-    width: clamp(230px,45vw, 440px);
-    height: clamp(164px,32vw, 314px);
-    border-radius: 10px;
-    object-fit: cover;
-}
-.about-box-itembox{
-    width: 100%;
-    max-width: 480px;
+.fv-subtitle{
     display: flex;
-    font-size: var(--fz-20);
-    text-align: center;
+    align-items: baseline;
+    color: var(--color-main);
+    font-size: var(--fz-24);
+    font-weight: bold;
+    line-height: var(--line-height-base);
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: clamp(10px,2vw,20px);
-    font-size: var(--fz-20);
 }
-.about-box-item{
-    width: clamp(90px,12vw,120px);
-    height: clamp(90px,12vw,120px);
-    border: 1px solid var(--color-txt);
-    border-radius: 10px;
+.fv-subtitle-row{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    align-items: baseline;
+}
+.fv-subtitle-row span{
+    font-size: var(--fz-32);
+}
+.fv-subtitle-row-md{
+    font-size: var(--fz-32);
+}
+.fv-txtbox{
+    width: 90%;
+    max-width: 480px;
+    padding: 30px clamp(20px, 8vw, 90px);
+    background-color: var(--color-accent);
+}
+.fv-txtbox p{
+    font-size: var(--fz-20);
+    color: var(--color-txt);
+    letter-spacing: var(--letter-spacing-base);
+    line-height: var(--line-height-base);
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--color-txt);
 }
 @media screen and (max-width: 768px) {
-    .about-box{
-        flex-direction: column-reverse;
-        justify-content: center;
-        gap: 40px;
-        letter-spacing: normal;
+    .fv{
+        background-position: left;
+        padding-bottom: 0;
+    }
+    .fv-inner{
+        width: 100%;
+    }
+    .fv-title{
+        margin: 0 auto;
+        width: 90%;
+    }
+    .fv-subtitle{
+        width: 90%;
     }
 }
-/*--- なぜ､30本限定なのか ---*/
-.why{
+/*--- SNSのその先へ ---*/
+.about{
     width: 100%;
-    min-height: 702px;
+    min-height: 925px;
     /* 背景画像として設定 */
-    background-image: url('../images/why-1.png');
+    background-image: url('../images/about-1.png');
     background-size: cover;    /* 画像を隙間なく敷き詰める */
     background-position: center; /* 画像の真ん中を基準にする */
     background-repeat: no-repeat;
     
     /* 上下の余白をしっかり取る（これがセクションの高さになる） */
-    padding: clamp(50px, 8vw, 100px) 0 0 0;
+    padding: clamp(50px, 10vw, 100px) 0 0 0;
     
     /* 中の文字を読みやすくするための微調整（暗くしたりなど） */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
-.why-inner{
+
+.about-inner{
+    position: relative;
+    width: 90%;
     max-width: 960px;
-    width: 95%;
-    margin: 0 auto;
+    z-index: 10;
+    color: var(--color-main);
 }
-.why-inner p{
+.about-body{
+    margin: clamp(50px, 8vw, 100px) auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
     font-size: var(--fz-20);
+    font-weight: bold;
+    line-height: var(--line-height-base);
+}
+.about-body p{
     text-align: center;
-    margin-bottom: clamp(50px,8vw,100px);
 }
-@media screen and (max-width: 768px) {
-    .why{
-        min-height: 505px;
-        letter-spacing: normal;
-    }
-}
-/*--- 予約 ---*/
-.booking{
-    width: 100%;
-    min-height: 720px;
-    /* 背景画像として設定 */
-    background-image: url('../images/booking-1.png');
-    background-size: cover;    /* 画像を隙間なく敷き詰める */
-    background-position: center; /* 画像の真ん中を基準にする */
-    background-repeat: no-repeat;
-    
-    /* 上下の余白をしっかり取る（これがセクションの高さになる） */
-    padding: clamp(50px, 8vw, 100px) 0;
-    
-    /* 中の文字を読みやすくするための微調整（暗くしたりなど） */
+.about-maintxt{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    text-align: center;
 }
-.booking-inner{
+.about-maintxt span{
+    font-size: var(--fz-32);
+}
+
+/*--- なぜ30本か ---*/
+.concept{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-accent);
+}
+.concept-inner{
+    width: 90%;
     max-width: 960px;
-    width: 95%;
-    margin: 0 auto;
+    padding: clamp(50px, 8vw, 100px) 0;
+    color: var(--color-txt);
+    text-align: center;
+}
+.concept-subtitle{
+    font-size: var(--fz-20);
+    line-height: var(--line-height-base);
+    margin: clamp(50px, 8vw, 100px) auto;
+}
+.concept-body{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 960px;
+    gap: 50px;
+}
+.concept-box{
+    width: 100%;
+    background-color: var(--color-main);
+    padding: 40px;
     display: flex;
     justify-content: space-around;
+    flex-direction: row; 
+    align-items: center;
+    box-shadow: 0 4px 4px rgba(191,163,128,0.5);
+}
+.concept-box-title{
+    display: flex;
+    width: 300px;
+    align-items: baseline;
+    justify-content: center;
+}
+.concept-box-title h4{
+    font-size: var(--fz-24);
+    font-weight: bold;
+}
+.concept-box-title span{
+    font-size: var(--fz-32);
+}
+.concept-box-txt{
+    flex: 1;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fz-20);
+    line-height: var(--line-height-base);
+    letter-spacing: var(--letter-spacing-title);
     gap: 20px;
 }
-.booking-txtbox{
-    flex: 1;
+.concept-box-txt img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.concept-maintxt{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: 50px;
+}
+.concept-maintxt p{
+    font-size: var(--fz-24);
+    letter-spacing: var(--letter-spacing-base);
+}
+.concept-maintxt span{
+    font-size: var(--fz-36);
+}
+.concept-maintxt-row{
+    display: flex;
+    align-items: baseline;
+}
+@media screen and (max-width: 768px) {
+    .concept-box {
+        flex-direction: column; /* スマホでは縦並び */
+    }
+    .concept-box-txt {
+        margin-left: 0;
+        margin-top: 20px;
+        width: 95%;
+    }
+}
+/*--- 予約案内 ---*/
+.booking{
+    width: 100%;
+    /* 背景画像として設定 */
+    background-image: url('../images/about-1.png');
+    background-size: cover;    /* 画像を隙間なく敷き詰める */
+    background-position: center; /* 画像の真ん中を基準にする */
+    background-repeat: no-repeat;
+    
+    /* 上下の余白をしっかり取る（これがセクションの高さになる） */
+    padding: clamp(50px, 10vw, 100px) 0 0 0;
+    
+    /* 中の文字を読みやすくするための微調整（暗くしたりなど） */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+    color: var(--color-main);
 }
-.booking-txtbox p{
+.booking-inner{
+    width: 90%;
+    max-width: 960px;
+}
+
+.booking-body{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    margin: clamp(50px, 8vw, 100px) 0 50px;
+}
+.booking-box{
+    width: 100%;
+    max-width: 480px;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background-color: var(--color-main);
+    color: var(--color-txt);
     font-size: var(--fz-24);
+    font-weight: bold;
+    letter-spacing: var(--letter-spacing-base);
+    line-height: var(--line-height-base);
+}
+.booking-box-start,.booking-box-day,.booking-box-way{
     text-align: center;
-    margin-bottom: 50px;
+}
+.booking-box-txtbox{
+    display: flex;
+    align-items: baseline;
+    font-size: var(--fz-20);
+    font-weight: 400;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.booking-box-txtbox span{
+    font-size: var(--fz-24);
+    letter-spacing: 0.02em;
 }
 .booking-checkbox{
-    max-width: 480px;
-    width: 100%;
-    border: 1px solid var(--color-txt);
-    padding: clamp(20px, 4vw, 50px) clamp(4px, 1vw, 10px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 10px;
-    border-radius: 10px;
+    margin: auto;
 }
-.booking-checkbox-item{
+.booking-checkbox-txt{
     display: flex;
-    align-items: center;
+    align-items: baseline;
 }
-.booking-checkbox-item img{
+.booking-checkbox-txt img{
     width: 20px;
     height: 20px;
 }
-.booking-checkbox-item p{
-    font-size: var(--fz-32);
-    letter-spacing: var(--letter-spacing-tight);
-    line-height: var(--line-height-tight);
-    margin: 0;
-}
-.booking-box{
-    max-width: 360px;
-    width: 100%;
-    background-color: var(--color-txt);
-    color: var(--color-main);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    gap: clamp(5px, 1vw, 10px);
-}
-.booking-box-item{
-    width: 90%;
-    text-align: center;
-}
-.booking-box-item h3{
-    font-size: var(--fz-32);
-    font-weight: bold;
-}
-.booking-box-itemtxt{
-    display: flex;
-    flex-wrap: wrap;
+.booking-checkbox-txt p{
     font-size: var(--fz-20);
+    font-weight: 400;
+}
+.booking-footer{
+    width: 100%;
+    height: 145px;
+    background: var(--cta-gradient);
+    color: var(--color-main);
+    font-size: var(--fz-24);
+    line-height: var(--line-height-base);
+    letter-spacing: var(--letter-spacing-base);
     font-weight: bold;
-    justify-content: center;
-    align-items: baseline;
-}
-@media screen and (max-width: 768px) {
-    .booking{
-        min-height: 815px;
-    }
-    .booking-inner{
-        flex-direction: column;
-        gap: 40px;
-    }
-    .booking-box{
-        padding: 30px 4px;
-    }
-}
-/*--- 店舗情報 ---*/
-.info{
-    background-color: var(--color-txt);
-    /* 上下の余白をしっかり取る（これがセクションの高さになる） */
-    padding: clamp(50px, 8vw, 100px) 0;
-
-    /* 中の文字を読みやすくするための微調整（暗くしたりなど） */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.info-inner{
-    max-width: 960px;
-    width: 95%;
-    margin: 0 auto;
-    color: var(--color-main);
-}
-.info-body{
+.booking-maintxt{
     display: flex;
-    width: 100%;
-    justify-content: space-around;
-    align-items: center;
-}
-.info-body h3{
-    font-size: var(--fz-36);
-    font-weight: bold;
-}
-.info-box{
-    font-size: var(--fz-32);
-    font-weight: bold;
-}
-.info-map{
-    width: 100%;
-    max-width: 960px;
-    height: clamp(100px,15vw,150px);
-    margin: clamp(50px,8vw,100px) 0;
+    align-items: baseline;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 @media screen and (max-width: 768px) {
-    .info-body{
+    .booking-body{
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        gap: 40px;
+        align-items: center;
+        gap: 50px;
+    }
+    .booking-box-txtbox{
+        justify-content: center;
     }
 }
-/*--- 最後に ---*/
+
+/* --- フォトスライド --- */
+.slide{
+    overflow: hidden;
+}
+.slider-box{
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    animation: slide 20s linear infinite;
+}
+.slider-box img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover
+}
+.slide-img{
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+}
+@keyframes slide {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+@media screen and (max-width: 768px) {
+    .slide-img{
+        width: 100px;
+        height: 100px;
+    }
+}
+/* --- 最後に --- */
 .last{
     width: 100%;
-    min-height: 1034px;
+    min-height: 670px;
     /* 背景画像として設定 */
     background-image: url('../images/last-1.png');
     background-size: cover;    /* 画像を隙間なく敷き詰める */
@@ -429,132 +571,46 @@ body{
     background-repeat: no-repeat;
     
     /* 上下の余白をしっかり取る（これがセクションの高さになる） */
-    padding: clamp(50px, 8vw, 100px) 0 0 0;
+    padding: clamp(50px, 10vw, 100px) 0 0 0;
     
     /* 中の文字を読みやすくするための微調整（暗くしたりなど） */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    text-align: center;
+    justify-content: center;
+    color: var(--color-main);
 }
 .last-inner{
     max-width: 960px;
-    width: 95%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    width: 90%;
+    margin-left: 50%;
 }
-.last-inner img{
-    width: 100%;
-    height: clamp(100px,12vw,150px);
-    object-fit: cover;
-    border-radius: 10px;
-    margin: clamp(25px,4vw,50px) auto;
-}
-
-@media screen and (max-width: 768px) {
-    .last{
-        min-height: 786px;
-    }
-}
-
-/*--- CTA ---*/
-.cta{
-    width: 100%;
-    height: 220px;
-    background-color: var(--color-txt);
-}
-.cta-inner{
-    width: 95%;
-    max-width: 960px;
-    height: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin:auto;
-}
-.cta-titlebox{
-    width: 100%;
-    max-width: 480px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-.cta-titlebox img{
-    width: clamp(100px,12vw,145px);
-    height: auto;
-}
-.cta-txt{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: var(--color-main);
-}
-.cta-txt h5{
+.section-title-last{
     font-size: var(--fz-32);
-    font-weight: bold;
-    margin: 0;
+    text-align: center;
 }
-.cta-price{
+.last-body{
     display: flex;
-    align-items: baseline;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 50px;
+}
+.last-body h4{
     font-size: var(--fz-24);
     font-weight: bold;
+    text-align: center;
 }
-.cta-price span{
-    font-size: var(--fz-40);
-}
-.cta-btn-box{
-    margin: auto 0;
-    width: 100%;
-    max-width: 480px;
-}
-.cta-btn-box p{
-    color: var(--color-main);
-    font-size: var(--fz-16);
-}
-.cta-btn{
-    width: 100%;
-    max-width: 480px;
-    height: clamp(55px,7vw,80px);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    background-color: var(--color-accent);
-    color: var(--color-main);
-    font-weight: bold;
-    font-size: var(--fz-36);
-    border-radius: 10px;
-    justify-content: center;
-}
-.cta-btn-box p{
-    font-size: var(--fz-16);
-}
-.cta-btn span{
-    font-size: var(--fz-32);
-    font-weight: bold;
-}
-.cta-num{
-    font-size: var(--fz-40);
+.last-body p{
+    font-size: var(--fz-20);
+    text-align: center;
 }
 @media screen and (max-width: 768px) {
-    .cta{
-        height: 255px;
-    }
-    .cta-inner{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 10px;
-    }
-    .cta-btn-box{
-        margin: 0;
-    }
+    .last-inner{
+    margin: 0 auto;
 }
-/*== 固定バー　==*/
+}
+
+/* --- 固定予約バー --- */
 .fixed-bar{
     position: fixed;
     bottom: 0;
@@ -570,44 +626,48 @@ body{
     align-items: center;
 }
 .fixed-bar-body{
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 .fixed-bar-title{
-    font-size: var(--fz-16);
-    text-align: center;
+    font-size: 16px;
+    letter-spacing: var(--letter-spacing-base);
 }
 .fixed-bar-txtbox{
     display: flex;
     align-items: baseline;
-    font-size: var(--fz-20);
-    font-weight: bold;
+    width: 100%;
+    justify-content: center;
 }
 .num-big{
     font-size: var(--fz-32);
+    font-weight: bold;
     font-family: var(--ff-num);
-    font-weight: 400;
-    font-style: normal; 
+    font-style: italic; 
     letter-spacing: 0.02em;
 }
-.num-small{
+.fixed-bar-txtbox p{
     font-size: var(--fz-20);
-    font-family: var(--ff-num);
+    letter-spacing: var(--letter-spacing-base);
+}
+.num-small{
+    font-size: var(--fz-24);
     font-weight: 400;
-    font-style: normal; 
+    font-family: var(--ff-num);
+    font-style: italic; 
     letter-spacing: 0.02em;
 }
 .fixed-bar-btn{
-    width: 160px;
-    height: 55px;
-    background-color: var(--color-accent);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: var(--fz-24);
+    width: 120px;
+    height: 60px;
+    background: var(--cta-gradient);
+    color: var(--color-main);
+    font-size: var(--fz-20);
     font-weight: bold;
-    text-align: center;
+    letter-spacing: var(--letter-spacing-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
